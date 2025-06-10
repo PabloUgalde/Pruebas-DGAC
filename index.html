@@ -1,0 +1,113 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Generador de Evaluaciones Teóricas</title>
+    <link rel="stylesheet" href="estilos.css">
+</head>
+<body>
+    <div id="contenedor-principal">
+        <header>
+            <h1>Generador de Evaluaciones Teóricas</h1>
+        </header>
+
+        <div id="configuracion-test" class="seccion">
+            <h2>Configurar Evaluación</h2>
+            <div>
+                <label for="curso-select">1. Selecciona el Curso:</label>
+                <select id="curso-select">
+                    <option value="">Elegir curso...</option>
+                    <!-- Opciones de curso se cargarán aquí desde app.js -->
+                </select>
+            </div>
+            <div>
+                <label for="materia-select">2. Selecciona la Materia:</label>
+                <select id="materia-select" disabled>
+                    <option value="">Primero elige un curso...</option>
+                </select>
+            </div>
+            <div>
+                <label for="cantidad-preguntas-input">3. Número de Preguntas (máx <span id="max-preguntas-materia">0</span>):</label>
+                <input type="number" id="cantidad-preguntas-input" min="1" placeholder="Elige curso y materia" disabled>
+            </div>
+            <div class="botones-accion">
+                <button id="btn-empezar-test" disabled>Iniciar Test Interactivo</button>
+                <button id="btn-generar-documento" disabled>Generar Documento de Preguntas</button>
+            </div>
+        </div>
+
+        <!-- Las secciones area-test, area-omitidas, area-resultados permanecen IGUAL que en la última versión que te di -->
+        <div id="area-test" class="seccion" style="display:none;">
+            <h2 id="titulo-materia-test"></h2>
+            <p id="progreso-pregunta"></p>
+            <div id="pregunta-container">
+                <p id="texto-pregunta" class="pregunta-texto"></p>
+                <div id="alternativas-container"></div>
+            </div>
+            <div id="controles-test">
+                <button id="btn-omitir-pregunta">Omitir Pregunta</button>
+                <button id="btn-siguiente-pregunta">Siguiente Pregunta</button>
+                <button id="btn-terminar-test" class="peligro">Terminar Evaluación (SALIR)</button>
+            </div>
+        </div>
+        
+        <div id="area-omitidas" class="seccion" style="display:none;">
+            <h2>Preguntas Omitidas</h2>
+             <p id="progreso-pregunta-omitida"></p>
+            <div id="pregunta-container-omitida">
+                <p id="texto-pregunta-omitida" class="pregunta-texto"></p>
+                <div id="alternativas-container-omitida"></div>
+            </div>
+            <div id="controles-test-omitidas">
+                <button id="btn-siguiente-pregunta-omitida">Siguiente Pregunta Omitida</button>
+                <button id="btn-ver-resultados">Ver Resultados</button>
+                 <button id="btn-terminar-test-omitidas" class="peligro">Terminar Evaluación (SALIR)</button>
+            </div>
+        </div>
+
+        <div id="area-resultados" class="seccion" style="display:none;">
+            <h2>Resultados de la Evaluación</h2>
+            <div id="resumen-general-container" class="resumen-general">
+                <h3>Resumen General</h3>
+                <div id="resumen-puntaje">
+                    <p>Curso: <span id="res-curso"></span></p>
+                    <p>Materia: <span id="res-materia"></span></p>
+                    <p>Preguntas del test: <span id="res-total-seleccionadas">0</span></p>
+                    <p>Respondidas: <span id="res-respondidas">0</span></p>
+                    <hr>
+                    <p class="resultado-destacado">Correctas: <span id="res-correctas">0</span></p>
+                    <p class="resultado-destacado">Incorrectas: <span id="res-incorrectas">0</span></p>
+                    <p>Omitidas sin respuesta: <span id="res-omitidas-final">0</span></p>
+                    <hr>
+                    <p><strong>Porcentaje Acierto: <span id="res-porcentaje">0%</span></strong></p>
+                    <p class="nota-porcentaje">(sobre preguntas respondidas)</p>
+                </div>
+            </div>
+            <div class="columnas-detalle-container">
+                <div id="incorrectas-columna" class="columna-detalle">
+                    <h3><span class="icono-incorrecta">❌</span> Incorrectas (<span id="contador-incorrectas">0</span>)</h3>
+                    <div id="resumen-ids-incorrectas" class="resumen-ids">IDs: Ninguna</div>
+                    <button id="btn-ver-detalle-incorrectas">Ver/Ocultar Detalle Incorrectas</button>
+                    <div id="detalle-incorrectas-container" class="detalle-respuestas-scroll" style="display:none;"></div>
+                </div>
+                <div id="correctas-columna" class="columna-detalle">
+                    <h3><span class="icono-correcta">✔️</span> Correctas (<span id="contador-correctas">0</span>)</h3>
+                    <div id="resumen-ids-correctas" class="resumen-ids">IDs: Ninguna</div>
+                    <button id="btn-ver-detalle-correctas">Ver/Ocultar Detalle Correctas</button>
+                    <div id="detalle-correctas-container" class="detalle-respuestas-scroll" style="display:none;"></div>
+                </div>
+            </div>
+            <button id="btn-reiniciar-test" style="margin-top: 30px; display: block; margin-left: auto; margin-right: auto;">Realizar otra Configuración</button>
+        </div>
+
+        <footer>
+            <p>© 2025 - Generador de Evaluaciones Aeronáuticas - Pablo Ugalde - Instructor de Vuelo</p>
+        </footer>
+    </div>
+
+    <!-- Los scripts de datos del curso NO se cargarán aquí inicialmente -->
+    <script src="app.js"></script> 
+    <!-- app.js debe ser el último script, o al menos después de donde se cargarán dinámicamente los datos -->
+</body>
+</html>
