@@ -12,13 +12,13 @@
             <h1>Generador de Evaluaciones Teóricas</h1>
         </header>
 
+        <!-- SECCIÓN DE CONFIGURACIÓN (con botón nuevo) -->
         <div id="configuracion-test" class="seccion">
             <h2>Configurar Evaluación</h2>
             <div>
                 <label for="curso-select">1. Selecciona el Curso:</label>
                 <select id="curso-select">
                     <option value="">Elegir curso...</option>
-                    <!-- Opciones de curso se cargarán aquí desde app.js -->
                 </select>
             </div>
             <div>
@@ -34,10 +34,43 @@
             <div class="botones-accion">
                 <button id="btn-empezar-test" disabled>Iniciar Test Interactivo</button>
                 <button id="btn-generar-documento" disabled>Generar Documento de Preguntas</button>
+                <!-- ========= NUEVO BOTÓN PARA MODO ESTUDIO ========= -->
+                <button id="btn-modo-estudio" disabled>Modo Estudio</button>
             </div>
         </div>
 
-        <!-- Las secciones area-test, area-omitidas, area-resultados permanecen IGUAL que en la última versión que te di -->
+        <!-- ========= NUEVA SECCIÓN PARA ELEGIR ORDEN EN MODO ESTUDIO ========= -->
+        <div id="opciones-modo-estudio" class="seccion" style="display:none;">
+            <h2>Configurar Modo Estudio</h2>
+            <p>Elige cómo quieres que se presenten las preguntas de la materia seleccionada:</p>
+            <div class="botones-accion">
+                <button id="btn-estudio-ordenado">En Orden Secuencial</button>
+                <button id="btn-estudio-aleatorio">En Orden Aleatorio (Recomendado)</button>
+            </div>
+            <button id="btn-volver-configuracion" class="secondary">Volver a Configuración</button>
+        </div>
+
+        <!-- ========= NUEVA SECCIÓN PARA LA INTERFAZ DE MODO ESTUDIO ========= -->
+        <div id="area-estudio" class="seccion" style="display:none;">
+            <h2 id="titulo-materia-estudio"></h2>
+            <p id="progreso-estudio"></p>
+            <div id="pregunta-container-estudio">
+                <p id="texto-pregunta-estudio" class="pregunta-texto"></p>
+                <div id="alternativas-container-estudio"></div>
+            </div>
+            <!-- Contenedor para el feedback que aparecerá después de verificar -->
+            <div id="feedback-container-estudio" class="feedback-container" style="display:none;">
+                <!-- El feedback se inyectará aquí con JavaScript -->
+            </div>
+            <div id="controles-estudio">
+                <!-- Este botón cambiará entre 'Verificar' y 'Siguiente Pregunta' -->
+                <button id="btn-accion-estudio">Verificar</button>
+                <button id="btn-salir-estudio" class="peligro">Salir del Estudio</button>
+            </div>
+        </div>
+        
+        <!-- El resto de tus secciones permanecen exactamente igual -->
+
         <div id="area-test" class="seccion" style="display:none;">
             <h2 id="titulo-materia-test"></h2>
             <p id="progreso-pregunta"></p>
@@ -106,8 +139,6 @@
         </footer>
     </div>
 
-    <!-- Los scripts de datos del curso NO se cargarán aquí inicialmente -->
-    <script src="app.js"></script> 
-    <!-- app.js debe ser el último script, o al menos después de donde se cargarán dinámicamente los datos -->
+    <script src="app.js"></script>
 </body>
 </html>

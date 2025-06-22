@@ -311,3 +311,105 @@ footer {
     border-top: 1px solid #e0e0e0;
     color: #777;
 }
+
+/* ==================================== */
+/* === ESTILOS PARA MODO ESTUDIO ====== */
+/* ==================================== */
+
+/* Opciones de orden (aleatorio/secuencial) */
+#opciones-modo-estudio .botones-accion {
+    display: flex;
+    justify-content: center;
+    gap: 15px;
+    margin-bottom: 20px;
+}
+#opciones-modo-estudio .secondary {
+    background-color: #6c757d;
+}
+
+/* Área principal del modo estudio */
+#area-estudio #progreso-estudio {
+    text-align: right;
+    color: #6c757d;
+    font-size: 0.9em;
+    margin-bottom: 1rem;
+}
+
+#alternativas-container-estudio button {
+    display: block;
+    width: 100%;
+    margin-bottom: 10px;
+    text-align: left;
+    background-color: #f8f9fa;
+    border: 2px solid #dee2e6;
+    color: #212529;
+}
+
+#alternativas-container-estudio button:not(:disabled):hover {
+    background-color: #e9ecef;
+    border-color: #adb5bd;
+}
+
+/* Estilo para la alternativa seleccionada por el usuario */
+#alternativas-container-estudio button.seleccionada {
+    border-color: #007bff;
+    background-color: #cce5ff;
+}
+
+/* Estilo para la alternativa CORRECTA (después de verificar) */
+#alternativas-container-estudio button.correcta {
+    background-color: #d4edda;
+    border-color: #c3e6cb;
+    color: #155724;
+    font-weight: bold;
+}
+
+/* Estilo para la alternativa INCORRECTA (la que el usuario eligió mal) */
+#alternativas-container-estudio button.incorrecta {
+    background-color: #f8d7da;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+/* Contenedor del Feedback */
+.feedback-container {
+    padding: 1.5rem;
+    margin-top: 20px;
+    border-radius: 8px;
+    border: 1px solid transparent;
+    line-height: 1.6;
+}
+
+.feedback-correcto {
+    background-color: #e7f5e9;
+    border-color: #c3e6cb;
+    color: #155724;
+}
+
+.feedback-incorrecto {
+    background-color: #fdedee;
+    border-color: #f5c6cb;
+    color: #721c24;
+}
+
+.feedback-titulo {
+    font-weight: bold;
+    font-size: 1.2em;
+    margin-top: 0;
+    margin-bottom: 0.5rem;
+}
+
+#controles-estudio {
+    margin-top: 20px;
+    display: flex;
+    justify-content: space-between;
+}
+
+button.secondary {
+    background-color: #023058; /* Un gris oscuro neutral */
+    color: white;
+}
+
+button.secondary:hover {
+    background-color: #5a6268; /* Un gris un poco más oscuro al pasar el ratón */
+}
