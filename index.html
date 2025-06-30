@@ -12,7 +12,7 @@
             <h1>Generador de Evaluaciones Teóricas</h1>
         </header>
 
-        <!-- SECCIÓN DE CONFIGURACIÓN (con botón nuevo) -->
+        <!-- SECCIÓN DE CONFIGURACIÓN -->
         <div id="configuracion-test" class="seccion">
             <h2>Configurar Evaluación</h2>
             <div>
@@ -34,12 +34,11 @@
             <div class="botones-accion">
                 <button id="btn-empezar-test" disabled>Iniciar Test Interactivo</button>
                 <button id="btn-generar-documento" disabled>Generar Documento de Preguntas</button>
-                <!-- ========= NUEVO BOTÓN PARA MODO ESTUDIO ========= -->
                 <button id="btn-modo-estudio" disabled>Modo Estudio</button>
             </div>
         </div>
 
-        <!-- ========= NUEVA SECCIÓN PARA ELEGIR ORDEN EN MODO ESTUDIO ========= -->
+        <!-- SECCIÓN PARA ELEGIR ORDEN EN MODO ESTUDIO -->
         <div id="opciones-modo-estudio" class="seccion" style="display:none;">
             <h2>Configurar Modo Estudio</h2>
             <p>Elige cómo quieres que se presenten las preguntas de la materia seleccionada:</p>
@@ -50,7 +49,7 @@
             <button id="btn-volver-configuracion" class="secondary">Volver a Configuración</button>
         </div>
 
-        <!-- ========= NUEVA SECCIÓN PARA LA INTERFAZ DE MODO ESTUDIO ========= -->
+        <!-- SECCIÓN PARA LA INTERFAZ DE MODO ESTUDIO (MODIFICADA) -->
         <div id="area-estudio" class="seccion" style="display:none;">
             <h2 id="titulo-materia-estudio"></h2>
             <p id="progreso-estudio"></p>
@@ -58,12 +57,16 @@
                 <p id="texto-pregunta-estudio" class="pregunta-texto"></p>
                 <div id="alternativas-container-estudio"></div>
             </div>
-            <!-- Contenedor para el feedback que aparecerá después de verificar -->
             <div id="feedback-container-estudio" class="feedback-container" style="display:none;">
                 <!-- El feedback se inyectará aquí con JavaScript -->
             </div>
+
+            <!-- ========= NUEVO CONTENEDOR PARA EL RESUMEN DEL ESTUDIO ========= -->
+            <div id="resumen-estudio-container" class="resumen-general" style="display:none;">
+                <!-- El resumen se generará y mostrará aquí al final -->
+            </div>
+            
             <div id="controles-estudio">
-                <!-- Este botón cambiará entre 'Verificar' y 'Siguiente Pregunta' -->
                 <button id="btn-accion-estudio">Verificar</button>
                 <button id="btn-salir-estudio" class="peligro">Salir del Estudio</button>
             </div>
