@@ -15,22 +15,9 @@
         <!-- SECCIÓN DE CONFIGURACIÓN -->
         <div id="configuracion-test" class="seccion">
             <h2>Configurar Evaluación</h2>
-            <div>
-                <label for="curso-select">1. Selecciona el Curso:</label>
-                <select id="curso-select">
-                    <option value="">Elegir curso...</option>
-                </select>
-            </div>
-            <div>
-                <label for="materia-select">2. Selecciona la Materia:</label>
-                <select id="materia-select" disabled>
-                    <option value="">Primero elige un curso...</option>
-                </select>
-            </div>
-            <div>
-                <label for="cantidad-preguntas-input">3. Número de Preguntas (máx <span id="max-preguntas-materia">0</span>):</label>
-                <input type="number" id="cantidad-preguntas-input" min="1" placeholder="Elige curso y materia" disabled>
-            </div>
+            <div><label for="curso-select">1. Selecciona el Curso:</label><select id="curso-select"><option value="">Elegir curso...</option></select></div>
+            <div><label for="materia-select">2. Selecciona la Materia:</label><select id="materia-select" disabled><option value="">Primero elige un curso...</option></select></div>
+            <div><label for="cantidad-preguntas-input">3. Número de Preguntas (máx <span id="max-preguntas-materia">0</span>):</label><input type="number" id="cantidad-preguntas-input" min="1" placeholder="Elige curso y materia" disabled></div>
             <div class="botones-accion">
                 <button id="btn-empezar-test" disabled>Iniciar Test Interactivo</button>
                 <button id="btn-generar-documento" disabled>Generar Documento de Preguntas</button>
@@ -49,59 +36,67 @@
             <button id="btn-volver-configuracion" class="secondary">Volver a Configuración</button>
         </div>
 
-        <!-- SECCIÓN PARA LA INTERFAZ DE MODO ESTUDIO (MODIFICADA) -->
+        <!-- SECCIÓN PARA LA INTERFAZ DE MODO ESTUDIO (ESTRUCTURA CORREGIDA) -->
         <div id="area-estudio" class="seccion" style="display:none;">
             <h2 id="titulo-materia-estudio"></h2>
             <p id="progreso-estudio"></p>
-            <div id="pregunta-container-estudio">
-                <p id="texto-pregunta-estudio" class="pregunta-texto"></p>
-                <div id="alternativas-container-estudio"></div>
+            <p id="texto-pregunta-estudio" class="pregunta-texto"></p>
+            <!-- El layout de 2 columnas solo para alternativas y botones -->
+            <div class="layout-interactivo">
+                <div class="contenido-principal">
+                    <div id="alternativas-container-estudio"></div>
+                </div>
+                <div class="barra-controles">
+                    <div id="controles-estudio">
+                        <button id="btn-accion-estudio">Verificar</button>
+                        <button id="btn-salir-estudio" class="peligro">Salir del Estudio</button>
+                    </div>
+                </div>
             </div>
-            <div id="feedback-container-estudio" class="feedback-container" style="display:none;">
-                <!-- El feedback se inyectará aquí con JavaScript -->
-            </div>
-
-            <!-- ========= NUEVO CONTENEDOR PARA EL RESUMEN DEL ESTUDIO ========= -->
-            <div id="resumen-estudio-container" class="resumen-general" style="display:none;">
-                <!-- El resumen se generará y mostrará aquí al final -->
-            </div>
-            
-            <div id="controles-estudio">
-                <button id="btn-accion-estudio">Verificar</button>
-                <button id="btn-salir-estudio" class="peligro">Salir del Estudio</button>
-            </div>
+            <!-- ===== EL FEEDBACK Y EL RESUMEN SE MUEVEN AQUÍ FUERA DEL LAYOUT ===== -->
+            <div id="feedback-container-estudio" class="feedback-container" style="display:none;"></div>
+            <div id="resumen-estudio-container" class="resumen-general" style="display:none;"></div>
         </div>
         
-        <!-- El resto de tus secciones permanecen exactamente igual -->
-
+        <!-- ÁREA DE TEST INTERACTIVO (estructura correcta) -->
         <div id="area-test" class="seccion" style="display:none;">
             <h2 id="titulo-materia-test"></h2>
             <p id="progreso-pregunta"></p>
-            <div id="pregunta-container">
-                <p id="texto-pregunta" class="pregunta-texto"></p>
-                <div id="alternativas-container"></div>
-            </div>
-            <div id="controles-test">
-                <button id="btn-omitir-pregunta">Omitir Pregunta</button>
-                <button id="btn-siguiente-pregunta">Siguiente Pregunta</button>
-                <button id="btn-terminar-test" class="peligro">Terminar Evaluación (SALIR)</button>
+            <p id="texto-pregunta" class="pregunta-texto"></p>
+            <div class="layout-interactivo">
+                <div class="contenido-principal">
+                    <div id="alternativas-container"></div>
+                </div>
+                <div class="barra-controles">
+                    <div id="controles-test">
+                        <button id="btn-omitir-pregunta">Omitir Pregunta</button>
+                        <button id="btn-siguiente-pregunta">Siguiente Pregunta</button>
+                        <button id="btn-terminar-test" class="peligro">Terminar Evaluación (SALIR)</button>
+                    </div>
+                </div>
             </div>
         </div>
         
+        <!-- ÁREA DE PREGUNTAS OMITIDAS (estructura correcta) -->
         <div id="area-omitidas" class="seccion" style="display:none;">
             <h2>Preguntas Omitidas</h2>
              <p id="progreso-pregunta-omitida"></p>
-            <div id="pregunta-container-omitida">
-                <p id="texto-pregunta-omitida" class="pregunta-texto"></p>
-                <div id="alternativas-container-omitida"></div>
-            </div>
-            <div id="controles-test-omitidas">
-                <button id="btn-siguiente-pregunta-omitida">Siguiente Pregunta Omitida</button>
-                <button id="btn-ver-resultados">Ver Resultados</button>
-                 <button id="btn-terminar-test-omitidas" class="peligro">Terminar Evaluación (SALIR)</button>
+             <p id="texto-pregunta-omitida" class="pregunta-texto"></p>
+            <div class="layout-interactivo">
+                <div class="contenido-principal">
+                    <div id="alternativas-container-omitida"></div>
+                </div>
+                <div class="barra-controles">
+                    <div id="controles-test-omitidas">
+                        <button id="btn-siguiente-pregunta-omitida">Siguiente Pregunta Omitida</button>
+                        <button id="btn-ver-resultados">Ver Resultados</button>
+                        <button id="btn-terminar-test-omitidas" class="peligro">Terminar Evaluación (SALIR)</button>
+                    </div>
+                </div>
             </div>
         </div>
 
+        <!-- El resto de las secciones (Resultados, Footer) permanecen igual -->
         <div id="area-resultados" class="seccion" style="display:none;">
             <h2>Resultados de la Evaluación</h2>
             <div id="resumen-general-container" class="resumen-general">

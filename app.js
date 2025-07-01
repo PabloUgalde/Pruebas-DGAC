@@ -117,9 +117,52 @@ document.addEventListener('DOMContentLoaded', () => {
         btnVolverConfiguracion.addEventListener('click', volverAConfiguracionDesdeEstudio);
         btnAccionEstudio.addEventListener('click', manejarAccionEstudio);
         btnSalirEstudio.addEventListener('click', terminarEstudioConfirmacion);
+        document.addEventListener('keydown', manejarTeclaEnter);
         resetearConfiguracionUI();
     }
-    
+    // Añade esta función completa en tu app.js
+
+    function manejarTeclaEnter(event) {
+        // Si no es la tecla "Enter", no hacemos nada.
+        if (event.key !== 'Enter') {
+            return;
+        }
+
+        // Evita la acción por defecto de la tecla Enter (como enviar un formulario)
+        event.preventDefault();
+
+        // Comprobar qué área está visible y actuar en consecuencia
+
+        // 1. Modo Estudio
+        if (areaEstudioDiv.style.display !== 'none') {
+            // Solo simula el clic si el botón de acción está habilitado
+            if (!btnAccionEstudio.disabled) {
+                btnAccionEstudio.click();
+            }
+            return; // Termina la función para no seguir comprobando
+        }
+
+        // 2. Modo Test Interactivo
+        if (areaTestDiv.style.display !== 'none') {
+            // En el test, la acción principal es "Siguiente Pregunta"
+            if (!btnSiguientePregunta.disabled) {
+                btnSiguientePregunta.click();
+            }
+            return;
+        }
+
+        // 3. Modo Preguntas Omitidas
+        if (areaOmitidasDiv.style.display !== 'none') {
+            // Aquí hay dos posibles botones de acción. Damos prioridad a "Siguiente".
+            if (btnSiguientePreguntaOmitida.style.display !== 'none' && !btnSiguientePreguntaOmitida.disabled) {
+                btnSiguientePreguntaOmitida.click();
+            } else if (btnVerResultados.style.display !== 'none' && !btnVerResultados.disabled) {
+                // Si el botón de siguiente no está, probamos con "Ver Resultados"
+                btnVerResultados.click();
+            }
+            return;
+        }
+    }
     // --- Lógica de Configuración y Carga (SIN CAMBIOS) ---
     // ... (Las funciones poblarSelectorCursos, resetearConfiguracionUI, registrarDatosCurso, cargarScriptDatosCurso, handleCursoChange, poblarSelectorMaterias, resetearCamposCantidad, handleMateriaChange, checkFormHabilitarBotones se mantienen igual)
     function poblarSelectorCursos() { while (cursoSelect.options.length > 1) { cursoSelect.remove(1); } CURSOS_CONFIG.forEach(curso => { const option = document.createElement('option'); option.value = curso.id; option.textContent = curso.nombreDisplay; cursoSelect.appendChild(option); }); }
@@ -214,21 +257,33 @@ document.addEventListener('DOMContentLoaded', () => {
                 correctas++;
             }
         });
-        const incorrectas = resultadosEstudio.length - correctas;
+        const totalEstudiadas = resultadosEstudio.length;
+        const incorrectas = totalEstudiadas - correctas;
+
+        // ================== NUEVO CÁLCULO DE PORCENTAJES ==================
+        let porcentajeCorrectas = "0.0";
+        let porcentajeIncorrectas = "0.0";
+
+        // Evitar división por cero si no se estudió ninguna pregunta
+        if (totalEstudiadas > 0) {
+            porcentajeCorrectas = ((correctas / totalEstudiadas) * 100).toFixed(1);
+            porcentajeIncorrectas = ((incorrectas / totalEstudiadas) * 100).toFixed(1);
+        }
+        // ================================================================
 
         // Construir el HTML para el resumen
+        // MODIFICADO: Añadir los porcentajes al HTML
         resumenEstudioContainer.innerHTML = `
             <h3>Resumen del Estudio</h3>
-            <p class="resultado-destacado">✔️ Correctas: <span>${correctas}</span></p>
-            <p class="resultado-destacado">❌ Incorrectas: <span>${incorrectas}</span></p>
+            <p class="resultado-destacado">✔️ Correctas: <span>${correctas}</span> (${porcentajeCorrectas}%)</p>
+            <p class="resultado-destacado">❌ Incorrectas: <span>${incorrectas}</span> (${porcentajeIncorrectas}%)</p>
             <hr>
-            <p>Total de preguntas estudiadas: <span>${preguntasEstudioActual.length}</span></p>
+            <p>Total de preguntas estudiadas: <span>${totalEstudiadas}</span></p>
         `;
         
         // Mostrar el contenedor del resumen
         resumenEstudioContainer.style.display = 'block';
     }
-
 
     // ======== MODIFICADO: mostrarPreguntaEstudio ========
     function mostrarPreguntaEstudio() {

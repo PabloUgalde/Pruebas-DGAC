@@ -413,3 +413,61 @@ button.secondary {
 button.secondary:hover {
     background-color: #5a6268; /* Un gris un poco más oscuro al pasar el ratón */
 }
+
+/* ========================================================= */
+/* === NUEVO LAYOUT INTERACTIVO (V4 - ESTRUCTURA FINAL) === */
+/* ========================================================= */
+
+.layout-interactivo {
+    display: flex;
+    gap: 20px; /* Espacio entre el contenido principal y la barra de botones */
+    margin-top: 20px; /* Añade espacio entre la pregunta y las alternativas */
+}
+
+.contenido-principal {
+    flex: 1; /* Ocupa todo el espacio disponible */
+    min-width: 0; /* Previene que el contenido se desborde */
+}
+
+.barra-controles {
+    width: 200px; /* Ancho fijo para la barra de botones */
+    position: sticky; /* ¡MAGIA! El sidebar se quedará fijo al hacer scroll */
+    top: 20px; /* Distancia desde la parte superior */
+    align-self: flex-start; /* Asegura que se alinee arriba y no se estire */
+    height: max-content; /* Evita que ocupe más altura de la necesaria */
+}
+
+/* Los botones dentro del sidebar se apilarán verticalmente */
+.barra-controles div[id^="controles-"] {
+    display: flex;
+    flex-direction: column;
+    gap: 10px;
+}
+
+.barra-controles div[id^="controles-"] button {
+    width: 100%;
+    margin-right: 0; /* Quitar el margen derecho que tenían antes */
+}
+
+/* === DISEÑO RESPONSIVO PARA MÓVILES === */
+@media (max-width: 800px) {
+    .layout-interactivo {
+        flex-direction: column; /* Apila las columnas una sobre otra */
+    }
+
+    .barra-controles {
+        width: 100%; /* El sidebar ocupa todo el ancho */
+        position: static; /* Quitamos el sticky en móvil */
+    }
+    
+    /* En móvil, los botones vuelven a estar en fila */
+    .barra-controles div[id^="controles-"] {
+        flex-direction: row;
+        flex-wrap: wrap; /* Permite que los botones pasen a la siguiente línea si no caben */
+        justify-content: center;
+    }
+
+    .barra-controles div[id^="controles-"] button {
+        width: auto; /* El ancho vuelve a ser automático */
+    }
+}
