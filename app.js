@@ -52,6 +52,7 @@ document.addEventListener('DOMContentLoaded', () => {
     const opcionesModoEstudioDiv = document.getElementById('opciones-modo-estudio');
     const btnEstudioOrdenado = document.getElementById('btn-estudio-ordenado');
     const btnEstudioAleatorio = document.getElementById('btn-estudio-aleatorio');
+    const inputPreguntaInicioEstudio = document.getElementById('input-pregunta-inicio-estudio');
     const btnVolverConfiguracion = document.getElementById('btn-volver-configuracion');
     const areaEstudioDiv = document.getElementById('area-estudio');
     const tituloMateriaEstudioH2 = document.getElementById('titulo-materia-estudio');
@@ -201,6 +202,16 @@ document.addEventListener('DOMContentLoaded', () => {
     function mostrarOpcionesEstudio() {
         configuracionTestDiv.style.display = 'none';
         opcionesModoEstudioDiv.style.display = 'block';
+        inputPreguntaInicioEstudio.value = 1;
+
+        const preguntasMateria = datosMateriasCursoCargado ? datosMateriasCursoCargado[materiaSelect.value] : null;
+        const maximoDisponible = preguntasMateria ? preguntasMateria.length : 1;
+        const cantidadTexto = cantidadPreguntasInput.value.trim();
+        const cantidadPedida = parseInt(cantidadTexto);
+        const maximoSesion = (cantidadTexto !== "" && !isNaN(cantidadPedida) && cantidadPedida > 0 && cantidadPedida <= maximoDisponible)
+            ? cantidadPedida
+            : maximoDisponible;
+        inputPreguntaInicioEstudio.max = maximoSesion;
     }
 
     function volverAConfiguracionDesdeEstudio() {
@@ -239,8 +250,16 @@ document.addEventListener('DOMContentLoaded', () => {
 
         // Se resetea el registro de resultados
         resultadosEstudio = [];
-        indicePreguntaEstudioActual = 0;
-        
+
+        // Permite elegir en qué pregunta partir dentro del rango disponible
+        let preguntaInicio = parseInt(inputPreguntaInicioEstudio.value);
+        if (isNaN(preguntaInicio) || preguntaInicio < 1) {
+            preguntaInicio = 1;
+        } else if (preguntaInicio > cantidadDeseada) {
+            preguntaInicio = cantidadDeseada;
+        }
+        indicePreguntaEstudioActual = preguntaInicio - 1;
+
         opcionesModoEstudioDiv.style.display = 'none';
         areaEstudioDiv.style.display = 'block';
         resumenEstudioContainer.style.display = 'none'; // Asegurarse de ocultar el resumen al inicio
