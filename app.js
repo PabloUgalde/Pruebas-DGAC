@@ -204,14 +204,10 @@ document.addEventListener('DOMContentLoaded', () => {
         opcionesModoEstudioDiv.style.display = 'block';
         inputPreguntaInicioEstudio.value = 1;
 
+        // El máximo válido es el total de preguntas de la materia: en orden secuencial
+        // "empezar en la pregunta N" se refiere a la posición N de la materia completa.
         const preguntasMateria = datosMateriasCursoCargado ? datosMateriasCursoCargado[materiaSelect.value] : null;
-        const maximoDisponible = preguntasMateria ? preguntasMateria.length : 1;
-        const cantidadTexto = cantidadPreguntasInput.value.trim();
-        const cantidadPedida = parseInt(cantidadTexto);
-        const maximoSesion = (cantidadTexto !== "" && !isNaN(cantidadPedida) && cantidadPedida > 0 && cantidadPedida <= maximoDisponible)
-            ? cantidadPedida
-            : maximoDisponible;
-        inputPreguntaInicioEstudio.max = maximoSesion;
+        inputPreguntaInicioEstudio.max = preguntasMateria ? preguntasMateria.length : 1;
     }
 
     function volverAConfiguracionDesdeEstudio() {
@@ -242,12 +238,6 @@ document.addEventListener('DOMContentLoaded', () => {
             cantidadDeseada = maximoPreguntas;
         }
         
-        let preguntasTemporales = [...preguntasMateria];
-        if (esAleatorio) {
-            barajarArray(preguntasTemporales);
-        }
-        preguntasEstudioActual = preguntasTemporales.slice(0, cantidadDeseada);
-
         // Se resetea el registro de resultados
         resultadosEstudio = [];
 
@@ -255,10 +245,26 @@ document.addEventListener('DOMContentLoaded', () => {
         let preguntaInicio = parseInt(inputPreguntaInicioEstudio.value);
         if (isNaN(preguntaInicio) || preguntaInicio < 1) {
             preguntaInicio = 1;
-        } else if (preguntaInicio > cantidadDeseada) {
-            preguntaInicio = cantidadDeseada;
         }
-        indicePreguntaEstudioActual = preguntaInicio - 1;
+
+        if (esAleatorio) {
+            let preguntasTemporales = [...preguntasMateria];
+            barajarArray(preguntasTemporales);
+            preguntasEstudioActual = preguntasTemporales.slice(0, cantidadDeseada);
+            if (preguntaInicio > preguntasEstudioActual.length) {
+                preguntaInicio = preguntasEstudioActual.length;
+            }
+            indicePreguntaEstudioActual = preguntaInicio - 1;
+        } else {
+            // En orden secuencial, "empezar en la pregunta N" debe referirse a la
+            // posición N de la materia completa, no a un recorte ya tomado desde el inicio.
+            if (preguntaInicio > maximoPreguntas) {
+                preguntaInicio = maximoPreguntas;
+            }
+            const offsetInicio = preguntaInicio - 1;
+            preguntasEstudioActual = preguntasMateria.slice(offsetInicio, offsetInicio + cantidadDeseada);
+            indicePreguntaEstudioActual = 0;
+        }
 
         opcionesModoEstudioDiv.style.display = 'none';
         areaEstudioDiv.style.display = 'block';
